@@ -1,4 +1,6 @@
 #include <iostream>
+#include <sstream>	
+#include <string>
 
 using namespace std;
 
@@ -24,17 +26,31 @@ int main() {
 	}
 	
 	for (int i = 0; i < 10; i++) {
+		string line = "";
 		for (int j = 0; j < 10; j++) {
-			
-			for (int k = 0; k < 9; k++) {
-				if (i + surr[k][0] >= 10 || i + surr[k][0] < 0 || j + surr[k][1] >= 10 || j + surr[k][1] < 0) {
-					continue;
+			if (playfield[i][j] != -1) {
+				for (int k = 0; k < 9; k++) {
+					if (i + surr[k][0] >= 10 || i + surr[k][0] < 0 || j + surr[k][1] >= 10 || j + surr[k][1] < 0) {
+						continue;
+					}
+					if (playfield[i + surr[k][0]][j + surr[k][1]] == -1) {
+						playfield[i][j] = playfield[i][j] + 1;	
+					}
 				}
-				if (playfield[i + surr[k][0]][j + surr[k][1]] == -1) {
-					
+				string count;
+				if(playfield[i][j] == 0) {
+					count = " ";
+				} else {
+					stringstream ss;
+					ss << playfield[i][j];
+					count = ss.str();
 				}
+				line = line + count + " ";
+			} else {
+				line = line + "* ";
 			}
 		}
+		cout<<line<<endl;
 	}
 }
 
